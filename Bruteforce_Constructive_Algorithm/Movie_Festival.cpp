@@ -3,8 +3,8 @@ using namespace std;
 bool cmp(pair<int, int> &a, pair<int, int> &b)
 {
     if (a.second == b.second)
-        return a.first < b.first;
-    return a.second < b.second;
+        return a.first > b.first;  // descending order
+    return a.second < b.second;   // ascending order
 };
 
 void solve()
@@ -22,21 +22,20 @@ void solve()
          {
         if (a.second == b.second)
             return a.first > b.first;
-        return a.second < b.second; });
+        return a.second < b.second; }); // ascending order
 
-    for (auto val : pt)
+    vector<pair<int, int>> pts;
+    pts.push_back({pt[0].first, pt[0].second});
+
+    for (int i = 1, j = 0; i < n; i++)
     {
-        cout << val.first << " " << val.second << endl;
+        if (pts[j].second <= pt[i].first)
+        {
+            pts.push_back({pt[i].first, pt[i].second});
+            j++;
+        }
     }
-    // int cnt = 1;
-    // for (int i = 0; i < n - 1; i++)
-    // {
-    //     if (pt[i].second <= pt[i + 1].first)
-    //     {
-    //         cnt++;
-    //     }
-    // }
-    // cout << cnt << endl;
+    cout << pts.size();
 }
 int main()
 {
