@@ -28,6 +28,7 @@
     "type_traits": "cpp",
     "typeindex": "cpp",
     "valarray": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "random": "cpp"
   }
 }
