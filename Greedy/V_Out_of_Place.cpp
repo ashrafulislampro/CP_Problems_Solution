@@ -9,19 +9,23 @@ void solve()
     for (auto &x : v)
         cin >> x;
 
-    int min_ele = *min_element(v.begin(), v.end());
-    int max_ele = *max_element(v.begin(), v.end());
     int ans = 0;
-    for (int i = 0; i < n; i++)
+
+    for (int i = n - 1; i > 0; i--)
     {
-        for (int j = 0; j < n; j++)
+        if (v[i - 1] > v[i])
         {
-            if (v[i] > v[j])
+            int tmp = v[i];
+            v[i] = v[i - 1];
+            v[i - 1] = tmp;
+            ans++;
+
+            while (i - 2 > 1 && v[i - 2] > v[i - 1] && v[i - 2] == v[i])
             {
+                i--;
                 int tmp = v[i];
-                v[i] = v[j];
-                v[j] = tmp;
-                ans++;
+                v[i] = v[i - 1];
+                v[i - 1] = tmp;
             }
         }
     }
@@ -32,9 +36,6 @@ int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0), cout.tie(0);
-
-    // freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
 
     solve();
     return 0;
