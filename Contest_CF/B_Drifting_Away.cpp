@@ -39,6 +39,7 @@ int main()
 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
+
     int T = 1;
     cin >> T;
     while (T--)
