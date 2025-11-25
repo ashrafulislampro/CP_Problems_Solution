@@ -21,32 +21,16 @@ void solve()
             s_c++;
     }
 
-    if (u_c + l_c + s_c + d >= 6)
-    {
-        int ans = 0;
-        if (u_c == 0)
-            ans++;
-        if (l_c == 0)
-            ans++;
-        if (s_c == 0)
-            ans++;
-        if (d == 0)
-            ans++;
-        cout << ans << endl;
-    }
-    else
-    {
-        int ans = 0;
-        if (u_c == 0)
-            ans++;
-        if (l_c == 0)
-            ans++;
-        if (s_c == 0)
-            ans++;
-        if (d == 0)
-            ans++;
-        cout << max(ans, 6 - n) << endl;
-    }
+    int ans = 0;
+    if (u_c == 0)
+        ans++;
+    if (l_c == 0)
+        ans++;
+    if (s_c == 0)
+        ans++;
+    if (d == 0)
+        ans++;
+    cout << max(ans, 6 - n) << endl;
 }
 int main()
 {
