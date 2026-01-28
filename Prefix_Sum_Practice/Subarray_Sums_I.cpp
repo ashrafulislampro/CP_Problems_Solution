@@ -8,33 +8,25 @@ using ll = long long;
     cin.tie(0), cout.tie(0);
 void solve()
 {
-    ll n, x;
+    ll n, x, num;
     cin >> n >> x;
-    vector<ll> v(n + 1);
-    for (int i = 1; i <= n; i++)
-        cin >> v[i];
+
     vector<ll> pre(n + 1);
     for (int i = 1; i <= n; i++)
-        pre[i] = pre[i - 1] + v[i];
-
-    // for (auto val : pre)
-    //     cout << val << " ";
-    // cout << endl;
-
-    ll mn = 0;
-    map<int, int> freq;
+    {
+        cin >> num;
+        pre[i] = pre[i - 1] + num;
+    }
+    ll ans = 0;
+    map<ll, int> mp;
+    mp[pre[0]]++;
     for (int r = 1; r <= n; r++)
     {
-        ll jog = pre[r];
-        ll biyog = mn;
-        cout<<jog<<", "<<biyog<<" = "<<jog-x<<endl;
-        if ((jog - x) == biyog)
-            freq[biyog]++;
-        mn = min(mn, pre[r]);
+        ll val = pre[r] - x;
+        ans += mp[val];
+        mp[pre[r]]++;
     }
-
-    for (auto [key, val] : freq)
-        cout << key << " " << val << endl;
+    cout << ans << endl;
 }
 int main()
 {
