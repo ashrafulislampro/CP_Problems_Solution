@@ -12,8 +12,11 @@ void solve()
     cin >> n >> x >> k;
 
     int rem = x % k;
-    int res = abs(k - x);
-    cout << min(rem, res) << endl;
+    int res = abs(k - rem);
+    if (x + res > n)
+        cout << rem << endl;
+    else
+        cout << min(rem, res) << endl;
 }
 int main()
 {

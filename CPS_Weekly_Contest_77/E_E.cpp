@@ -10,29 +10,32 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<int> A(n);
-
-    for (int i = 0; i < n; i++)
-        cin >> A[i];
-
-   
+    char A[n][n], B[n][n];
     for (int i = 0; i < n; i++)
     {
-        if (A[i] < n - i)
+        for (int j = 0; j < n; j++)
         {
-            int j;
-            for(j = i+1; j < n; j++){
-                if(A[j] == n-i)break;
-            }
-            while(i < j)swap(A[i++],A[j--]);
-            break;
+            cin >> A[i][j];
         }
     }
-   
-
-    for (int x : A)
-        cout << x << " ";
-    cout << "\n";
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cin >> B[i][j];
+        }
+    }
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (A[i][j] != B[i][j])
+            {
+                cout << i + 1 << " " << j + 1 << endl;
+                return;
+            };
+        }
+    }
 }
 int main()
 {
@@ -41,7 +44,7 @@ int main()
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     int T = 1;
-    cin >> T;
+    // cin >> T;
     while (T--)
         solve();
     return 0;

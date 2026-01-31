@@ -10,29 +10,28 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<int> A(n);
-
-    for (int i = 0; i < n; i++)
-        cin >> A[i];
-
-   
-    for (int i = 0; i < n; i++)
+    int num = n, cnt = 0;
+    for (int i = n, j = 1; i >= 1; i--, j++)
     {
-        if (A[i] < n - i)
+        if (i == j)
         {
-            int j;
-            for(j = i+1; j < n; j++){
-                if(A[j] == n-i)break;
+            cout << i - 1 << " ";
+            cnt = 1;
+        }
+        else
+        {
+            if (cnt == 1)
+            {
+                cout << i + 1 << " ";
+                cnt = 0;
             }
-            while(i < j)swap(A[i++],A[j--]);
-            break;
+            else
+            {
+                cout << i << " ";
+            }
         }
     }
-   
-
-    for (int x : A)
-        cout << x << " ";
-    cout << "\n";
+    cout << endl;
 }
 int main()
 {

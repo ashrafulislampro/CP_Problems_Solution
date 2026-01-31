@@ -8,31 +8,20 @@ using ll = long long;
     cin.tie(0), cout.tie(0);
 void solve()
 {
-    int n;
-    cin >> n;
-    vector<int> A(n);
-
-    for (int i = 0; i < n; i++)
-        cin >> A[i];
-
-   
+    int n = 9, x;
+    int sum_a = 0, sum_b = 0;
     for (int i = 0; i < n; i++)
     {
-        if (A[i] < n - i)
-        {
-            int j;
-            for(j = i+1; j < n; j++){
-                if(A[j] == n-i)break;
-            }
-            while(i < j)swap(A[i++],A[j--]);
-            break;
-        }
+        cin >> x;
+        sum_a += x;
     }
-   
+    for (int i = 0; i < n - 1; i++)
+    {
+        cin >> x;
+        sum_b += x;
+    }
 
-    for (int x : A)
-        cout << x << " ";
-    cout << "\n";
+    cout << (sum_a - sum_b + 1) << endl;
 }
 int main()
 {
@@ -41,7 +30,7 @@ int main()
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
     int T = 1;
-    cin >> T;
+    // cin >> T;
     while (T--)
         solve();
     return 0;

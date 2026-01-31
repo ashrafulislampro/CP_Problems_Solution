@@ -10,29 +10,28 @@ void solve()
 {
     int n;
     cin >> n;
-    vector<int> A(n);
+    vector<int> v(n);
+    for (auto &x : v)
+        cin >> x;
 
-    for (int i = 0; i < n; i++)
-        cin >> A[i];
-
-   
+    map<int, int> mp;
+    int ans = INT_MIN, tmp = 0;
     for (int i = 0; i < n; i++)
     {
-        if (A[i] < n - i)
+        ++tmp;
+        if (mp[v[i]] != 0)
         {
-            int j;
-            for(j = i+1; j < n; j++){
-                if(A[j] == n-i)break;
-            }
-            while(i < j)swap(A[i++],A[j--]);
-            break;
-        }
-    }
-   
+            tmp -= 2;
 
-    for (int x : A)
-        cout << x << " ";
-    cout << "\n";
+            mp[v[i]]--;
+            continue;
+        }
+
+        mp[v[i]]++;
+        if (tmp > ans)
+            ans = tmp;
+    }
+    cout << ans << endl;
 }
 int main()
 {
