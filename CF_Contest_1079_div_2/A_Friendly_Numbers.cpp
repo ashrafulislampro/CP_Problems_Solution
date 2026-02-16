@@ -6,18 +6,28 @@ using ll = long long;
 #define ASHRAFUL                  \
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
+int d(int y)
+{
+    int ans = 0;
+    while (y > 0)
+    {
+        ans += y % 10;
+        y /= 10;
+    }
+    return ans;
+}
 void solve()
 {
-    int n;
-    cin >> n;
-    if (n % 9 == 0)
+    int x;
+    cin >> x;
+
+    int cnt = 0;
+    for (int y = x; y < x + 100; y++)
     {
-        cout << 10 << endl;
+        if (y - d(y) == x)
+            cnt++;
     }
-    else
-    {
-        cout << 0 << endl;
-    }
+    cout << cnt << endl;
 }
 int main()
 {
