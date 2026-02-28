@@ -1,0 +1,1 @@
+{"name":"Local: max_sliding_window","url":"/home/ashraful-islam/Documents/CP_Problems_Solution/max_sliding_window.cpp","tests":[{"id":1772164367519,"input":"1\n9\n1 3 1 4 3 2 4 2 5","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/ashraful-islam/Documents/CP_Problems_Solution/max_sliding_window.cpp","group":"local","local":true}
