@@ -42,8 +42,8 @@ void solve()
     for (; i < n;)
     {
         int val = q.front();
-
         q.pop();
+        
         if (val > k)
         {
             ans = min(ans, (int)q.size());
