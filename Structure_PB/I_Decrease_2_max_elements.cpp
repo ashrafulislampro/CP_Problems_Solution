@@ -6,24 +6,21 @@ using ll = long long;
 #define ASHRAFUL                  \
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
-struct Point{
-    double x, y;    
+struct Student
+{
+    int age, standard;
+    string first_name, last_name;
 };
-bool cmp(Point &a, Point &b){
-    if(a.x == b.x)
-        return a.y < b.y;
-    return a.x < b.x;
-}
+
 void solve()
 {
-    pair<int, int> arr[5];
-    for(int i = 0; i < 5; i++)
-        cin>>arr[i].first>>arr[i].second;
-    
-    sort(arr, arr+5, cmp);
-    for(auto [x, y]: arr)
-        cout<<x<<" "<<y<<endl;
-        
+    Student obj;
+    cin >> obj.age;
+    cin >> obj.first_name;
+    cin >> obj.last_name;
+    cin >> obj.standard;
+
+    cout << obj.age << ' ' << obj.first_name << ' ' << obj.last_name << ' ' << obj.standard << endl;
 }
 int main()
 {
