@@ -1,0 +1,1 @@
+{"name":"Local: D - Checkout Assistant","url":"/home/ashraful-islam/Documents/CP_Problems_Solution/D - Checkout Assistant.cpp","tests":[{"id":1774416837868,"input":"4\n2 10\n0 20\n1 5\n1 3","output":"8"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/ashraful-islam/Documents/CP_Problems_Solution/D - Checkout Assistant.cpp","group":"local","local":true}
