@@ -9,16 +9,25 @@ using ll = long long;
 void solve()
 {
 
+    int x = 8;
+    x = x & (-1);
+    cout << bitset<8>(x) << endl;
+    cout << bitset<8>(-1) << endl;
+    cout << bitset<8>(x & (-1)) << endl;
+    cout << x << endl;
+
+    cout << bitset<10>(x) << endl;
+    cout << __builtin_popcount(x) << endl;
+    cout << __lg(x) << endl;
+    cout << (1 << __lg(x)) << endl;
+
     string s = "zaabaaz";
     int ans = 0;
     for (char c : s)
     {
-        int ss = (1 << (c - 'a'));
-        cout << c << " = " << (c - 'a') << ", " << bitset<32>(ss) << endl;
         ans = ans ^ (1 << (c - 'a'));
-        cout << bitset<32>(ans) << endl;
     }
-    cout << ans << endl;
+
     if (ans == 0 || (ans & (ans - 1)) == 0)
     {
         cout << "Yes" << endl;
