@@ -1,0 +1,46 @@
+#pragma GCC optimize("Ofast")
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+#define ASHRAFUL                  \
+    ios_base::sync_with_stdio(0); \
+    cin.tie(0), cout.tie(0);
+void solve()
+{
+    int a, b;
+    cin >> a >> b;
+
+    int xr = 0;
+    for (int i = 0; i < a; i++)
+    {
+        xr ^= i;
+    }
+
+    if (xr == b)
+    {
+        cout << a << endl;
+    }
+    else if (xr != b and (xr ^ b) == a)
+    {
+        cout << a + 2 << endl;
+    }
+    else
+    {
+        cout << a + 1 << endl;
+    }
+}
+int main()
+{
+    ASHRAFUL
+
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
+    int T = 1;
+    cin >> T;
+    while (T--)
+        solve();
+
+    return 0;
+}
+// Coded by Ashraful Islam @ml.ashraful37
