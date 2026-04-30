@@ -23,60 +23,51 @@ using ll = long long;
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
 
-vector<vector<int>> adj_list;
-vector<int> color;
-
-bool possible = true;
-
-// Bi-coloring Problem or Bipartite graph problem
-void dfs(int node, int curr_color)
-{
-    color[node] = curr_color;
-    for (auto &child : adj_list[node])
-    {
-        if (color[child] != -1)
-        {
-            if (color[child] == color[node])
-            {
-                possible = false; // Bi-coloring is not possible!
-            }
-            else
-            {
-                continue;
-            }
-        }
-        else
-        {
-            dfs(child, (curr_color == 1 ? 2 : 1));
-        }
-    }
-}
 void solve()
 {
     int node, edge;
     cin >> node >> edge;
-    adj_list.resize(node + 1);
-    color.resize(node + 1, -1);
+    vector<int> adj_list[node + 1];
+    map<int, int> dep;
+    vector<int> ans;
     int a, b;
     for (int i = 1; i <= edge; i++)
     {
         cin >> a >> b;
         adj_list[a].push_back(b);
         adj_list[b].push_back(a);
+        dep[a];
+        dep[b]++;
     }
 
-    for (int i = 1; i <= node; i++)
-        if (color[i] == -1)
-            dfs(i, 1);
-
-    if (!possible)
+    queue<int> unlocked;
+    for (auto &it : dep)
     {
-        cout << "IMPOSSIBLE" << endl;
+        if (it.second == 0)
+            unlocked.push(it.first);
+    }
+
+    while (!unlocked.empty())
+    {
+        int nod = unlocked.front();
+        unlocked.pop();
+        ans.push_back(nod);
+
+        for (auto child : adj_list[nod])
+        {
+            if (--dep[child] == 0)
+            {
+                unlocked.push(child);
+            }
+        }
+    }
+
+    if ((int)ans.size() != (int)dep.size())
+    {
+        cout << "NO" << endl;
         return;
     }
-
-    for (int i = 1; i <= node; i++)
-        cout << color[i] << " \n"[i == node];
+    cout << "YES" << endl;
 }
 int main()
 {
@@ -89,16 +80,13 @@ int main()
 // Coded by Ashraful Islam @ml.ashraful37
 
 /*
-Test Case:
-
-5 3
+Input:
+3 2
 1 2
-1 3
-4 5
+2 3
 
-
-Ans: 
-1 2 2 1 2
-
-
+Output:
+YES
 */
+
+// https://www.spoj.com/problems/PT07Y/en/

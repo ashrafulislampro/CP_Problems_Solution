@@ -24,30 +24,26 @@ using ll = long long;
     cin.tie(0), cout.tie(0);
 
 vector<vector<int>> adj_list;
-vector<int> color;
-
-bool possible = true;
-
-// Bi-coloring Problem or Bipartite graph problem
-void dfs(int node, int curr_color)
+vector<bool> vis;
+vector<int> fromWhere;
+void bfs(int src)
 {
-    color[node] = curr_color;
-    for (auto &child : adj_list[node])
+    queue<int> q;
+    q.push(src);
+    vis[src] = true;
+    while (!q.empty())
     {
-        if (color[child] != -1)
+        int node = q.front();
+        q.pop();
+
+        for (auto &child : adj_list[node])
         {
-            if (color[child] == color[node])
+            if (!vis[child])
             {
-                possible = false; // Bi-coloring is not possible!
+                fromWhere[child] = node;
+                q.push(child);
+                vis[child] = true;
             }
-            else
-            {
-                continue;
-            }
-        }
-        else
-        {
-            dfs(child, (curr_color == 1 ? 2 : 1));
         }
     }
 }
@@ -56,7 +52,8 @@ void solve()
     int node, edge;
     cin >> node >> edge;
     adj_list.resize(node + 1);
-    color.resize(node + 1, -1);
+    vis.resize(node + 1);
+    fromWhere.resize(node + 1, -1);
     int a, b;
     for (int i = 1; i <= edge; i++)
     {
@@ -65,18 +62,32 @@ void solve()
         adj_list[b].push_back(a);
     }
 
-    for (int i = 1; i <= node; i++)
-        if (color[i] == -1)
-            dfs(i, 1);
-
-    if (!possible)
+    bfs(1);
+    if (!vis[node])
     {
         cout << "IMPOSSIBLE" << endl;
         return;
     }
+    vector<int> path;
+    /*
+        x aschhe y theke
+        y aschhe z theke
+        z aschhe k theke
+        x -> y -> z -> k
 
-    for (int i = 1; i <= node; i++)
-        cout << color[i] << " \n"[i == node];
+    */
+    for (int i = node; i != -1; i = fromWhere[i])
+    {
+        path.push_back(i);
+    }
+
+    cout << path.size() << endl;
+    reverse(path.begin(), path.end());
+    for (auto val : path)
+    {
+        cout << val << " ";
+    }
+    cout << endl;
 }
 int main()
 {
@@ -89,16 +100,19 @@ int main()
 // Coded by Ashraful Islam @ml.ashraful37
 
 /*
-Test Case:
-
-5 3
+Input:
+5 5
 1 2
 1 3
-4 5
+1 4
+2 3
+5 4
 
 
-Ans: 
-1 2 2 1 2
-
+output:
+3
+1 4 5
 
 */
+
+// https://cses.fi/problemset/task/1667

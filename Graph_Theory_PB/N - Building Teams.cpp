@@ -24,30 +24,25 @@ using ll = long long;
     cin.tie(0), cout.tie(0);
 
 vector<vector<int>> adj_list;
+vector<bool> vis;
 vector<int> color;
+bool flg = true;
 
-bool possible = true;
 
-// Bi-coloring Problem or Bipartite graph problem
-void dfs(int node, int curr_color)
+// Bipartite graph or Bi-Coloring Problem
+void dfs(int src, int curr_grp)
 {
-    color[node] = curr_color;
-    for (auto &child : adj_list[node])
+    vis[src] = true;
+    color[src] = curr_grp;
+    for (auto &child : adj_list[src])
     {
-        if (color[child] != -1)
+        if (color[child] == color[src] and vis[child])
         {
-            if (color[child] == color[node])
-            {
-                possible = false; // Bi-coloring is not possible!
-            }
-            else
-            {
-                continue;
-            }
+            flg = false;
         }
-        else
+        else if (!vis[child])
         {
-            dfs(child, (curr_color == 1 ? 2 : 1));
+            dfs(child, 3 - curr_grp);
         }
     }
 }
@@ -56,7 +51,8 @@ void solve()
     int node, edge;
     cin >> node >> edge;
     adj_list.resize(node + 1);
-    color.resize(node + 1, -1);
+    vis.resize(node + 1, false);
+    color.resize(node + 1);
     int a, b;
     for (int i = 1; i <= edge; i++)
     {
@@ -65,18 +61,23 @@ void solve()
         adj_list[b].push_back(a);
     }
 
-    for (int i = 1; i <= node; i++)
-        if (color[i] == -1)
+    for (int i = 1; i <= node && flg; i++)
+    {
+        if (!vis[i])
+        {
             dfs(i, 1);
+        }
+    }
 
-    if (!possible)
+    if (!flg)
     {
         cout << "IMPOSSIBLE" << endl;
         return;
     }
-
     for (int i = 1; i <= node; i++)
-        cout << color[i] << " \n"[i == node];
+    {
+        cout << color[i] << " ";
+    }
 }
 int main()
 {
@@ -89,16 +90,15 @@ int main()
 // Coded by Ashraful Islam @ml.ashraful37
 
 /*
-Test Case:
-
+Input:
 5 3
 1 2
 1 3
 4 5
 
-
-Ans: 
+Output:
 1 2 2 1 2
-
-
+This is constructive ans which is base on the programmer thinking.
 */
+
+// https://cses.fi/problemset/task/1668

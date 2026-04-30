@@ -24,30 +24,13 @@ using ll = long long;
     cin.tie(0), cout.tie(0);
 
 vector<vector<int>> adj_list;
-vector<int> color;
-
-bool possible = true;
-
-// Bi-coloring Problem or Bipartite graph problem
-void dfs(int node, int curr_color)
+vector<bool> vis;
+void dfs(int src)
 {
-    color[node] = curr_color;
-    for (auto &child : adj_list[node])
-    {
-        if (color[child] != -1)
-        {
-            if (color[child] == color[node])
-            {
-                possible = false; // Bi-coloring is not possible!
-            }
-            else
-            {
-                continue;
-            }
-        }
-        else
-        {
-            dfs(child, (curr_color == 1 ? 2 : 1));
+    vis[src] = true;
+    for(auto &child: adj_list[src]){
+        if(!vis[child]){
+            dfs(child);
         }
     }
 }
@@ -56,27 +39,31 @@ void solve()
     int node, edge;
     cin >> node >> edge;
     adj_list.resize(node + 1);
-    color.resize(node + 1, -1);
-    int a, b;
+    vis.resize(node + 1, false);
+
+    int u, v;
     for (int i = 1; i <= edge; i++)
     {
-        cin >> a >> b;
-        adj_list[a].push_back(b);
-        adj_list[b].push_back(a);
+        cin >> u >> v;
+        adj_list[u].push_back(v);
+        adj_list[v].push_back(u);
     }
-
+    vector<int> roads;
     for (int i = 1; i <= node; i++)
-        if (color[i] == -1)
-            dfs(i, 1);
-
-    if (!possible)
     {
-        cout << "IMPOSSIBLE" << endl;
-        return;
+        if (!vis[i])
+        {
+            roads.push_back(i);
+            dfs(i);
+        }
     }
+    int len = roads.size();
 
-    for (int i = 1; i <= node; i++)
-        cout << color[i] << " \n"[i == node];
+    cout << len - 1 << endl;
+    for (int i = 1; i < len; i++)
+    {
+        cout << roads[i] << " " << roads[i - 1] << endl;
+    }
 }
 int main()
 {
@@ -88,17 +75,16 @@ int main()
 }
 // Coded by Ashraful Islam @ml.ashraful37
 
+
 /*
-Test Case:
-
-5 3
+input:
+4 2
 1 2
-1 3
-4 5
+3 4
 
-
-Ans: 
-1 2 2 1 2
-
-
+output:
+1
+3 1
 */
+
+// https://cses.fi/problemset/task/1666

@@ -24,39 +24,28 @@ using ll = long long;
     cin.tie(0), cout.tie(0);
 
 vector<vector<int>> adj_list;
-vector<int> color;
+vector<bool> vis;
+int mx_citizen_grp = 0;
 
-bool possible = true;
-
-// Bi-coloring Problem or Bipartite graph problem
-void dfs(int node, int curr_color)
+void dfs(int src)
 {
-    color[node] = curr_color;
-    for (auto &child : adj_list[node])
+    mx_citizen_grp++;
+    vis[src] = true;
+    for (auto &child : adj_list[src])
     {
-        if (color[child] != -1)
+        if (!vis[child])
         {
-            if (color[child] == color[node])
-            {
-                possible = false; // Bi-coloring is not possible!
-            }
-            else
-            {
-                continue;
-            }
-        }
-        else
-        {
-            dfs(child, (curr_color == 1 ? 2 : 1));
+            dfs(child);
         }
     }
-}
+};
+
 void solve()
 {
     int node, edge;
     cin >> node >> edge;
     adj_list.resize(node + 1);
-    color.resize(node + 1, -1);
+    vis.resize(node + 1, false);
     int a, b;
     for (int i = 1; i <= edge; i++)
     {
@@ -64,41 +53,60 @@ void solve()
         adj_list[a].push_back(b);
         adj_list[b].push_back(a);
     }
-
+    int ans = 0;
     for (int i = 1; i <= node; i++)
-        if (color[i] == -1)
-            dfs(i, 1);
-
-    if (!possible)
     {
-        cout << "IMPOSSIBLE" << endl;
-        return;
+        if (!vis[i])
+        {
+            mx_citizen_grp = 0;
+            dfs(i);
+            ans = max(ans, mx_citizen_grp);
+        }
     }
-
+    cout << ans << endl;
     for (int i = 1; i <= node; i++)
-        cout << color[i] << " \n"[i == node];
+        adj_list[i].clear();
+    vis.clear();
 }
 int main()
 {
     ASHRAFUL
 
-    solve();
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
+    int T = 1;
+    cin >> T;
+    while (T--)
+        solve();
 
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
 
 /*
-Test Case:
-
-5 3
+Input:
+2
+3 2
 1 2
-1 3
-4 5
+2 3
+10 12
+1 2
+3 1
+3 4
+5 4
+3 5
+4 6
+5 2
+2 1
+7 1
+1 2
+9 10
+8 9
 
-
-Ans: 
-1 2 2 1 2
-
+Output:
+3
+7
 
 */
+
+// https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1549

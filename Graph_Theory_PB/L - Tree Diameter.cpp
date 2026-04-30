@@ -22,61 +22,52 @@ using ll = long long;
 #define ASHRAFUL                  \
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
-
 vector<vector<int>> adj_list;
-vector<int> color;
+vector<bool> vis;
+vector<int> dis;
+int mx_node = -1, mx_dis = -1;
 
-bool possible = true;
-
-// Bi-coloring Problem or Bipartite graph problem
-void dfs(int node, int curr_color)
+void dfs(int src, int parent)
 {
-    color[node] = curr_color;
-    for (auto &child : adj_list[node])
+    if (parent > mx_dis)
     {
-        if (color[child] != -1)
+        mx_node = src;
+        mx_dis = parent;
+    }
+
+    vis[src] = true;
+    for (auto child : adj_list[src])
+    {
+        if (!vis[child])
         {
-            if (color[child] == color[node])
-            {
-                possible = false; // Bi-coloring is not possible!
-            }
-            else
-            {
-                continue;
-            }
-        }
-        else
-        {
-            dfs(child, (curr_color == 1 ? 2 : 1));
+            dfs(child, parent + 1);
         }
     }
 }
+
 void solve()
 {
-    int node, edge;
-    cin >> node >> edge;
+    int node;
+    cin >> node;
     adj_list.resize(node + 1);
-    color.resize(node + 1, -1);
+    vis.resize(node + 1, false);
+    dis.resize(node + 1, 0);
     int a, b;
-    for (int i = 1; i <= edge; i++)
+    for (int i = 2; i <= node; i++)
     {
         cin >> a >> b;
         adj_list[a].push_back(b);
         adj_list[b].push_back(a);
     }
 
-    for (int i = 1; i <= node; i++)
-        if (color[i] == -1)
-            dfs(i, 1);
+    // dfs
+    dfs(1, 0);
+    int y = mx_node;
+    fill(vis.begin(), vis.end(), false);
+    mx_dis = -1, mx_node = -1;
+    dfs(y, 0);
 
-    if (!possible)
-    {
-        cout << "IMPOSSIBLE" << endl;
-        return;
-    }
-
-    for (int i = 1; i <= node; i++)
-        cout << color[i] << " \n"[i == node];
+    cout << mx_dis << endl;
 }
 int main()
 {
@@ -89,16 +80,15 @@ int main()
 // Coded by Ashraful Islam @ml.ashraful37
 
 /*
-Test Case:
-
-5 3
+Input:
+5
 1 2
 1 3
-4 5
+3 4
+3 5
 
-
-Ans: 
-1 2 2 1 2
-
-
+Output:
+3
 */
+
+// https://cses.fi/problemset/task/1131
