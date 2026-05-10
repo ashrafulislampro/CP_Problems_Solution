@@ -50,7 +50,7 @@ void solve()
         adj[u].push_back({w, v});
         // adj[v].push_back({w, u}) -> if undirected graph
     }
-   
+
     int source = 1;
     for (int i = 1; i <= n; i++)
     {
@@ -102,3 +102,6 @@ int main()
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
+
+// Documentation
+// https://cp-algorithms.com/graph/dijkstra_sparse.html
