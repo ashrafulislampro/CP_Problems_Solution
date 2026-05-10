@@ -30,6 +30,7 @@ using ll = long long;
 vector<vector<int>> adj_list;
 vector<int> subtree;
 
+// subtree and subornate problem.
 void dfs(int src, int par)
 {
     subtree[src] = 1;
