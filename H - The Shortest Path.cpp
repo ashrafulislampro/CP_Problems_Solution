@@ -52,7 +52,7 @@ void solve()
     ll a, b, c, i, j, k, m, n;
     cin >> n >> m;
     vector<Edge> adj;
-    vector<ll> dist(n + 5);
+    
     for (int i = 1; i <= m; i++)
     {
         cin >> a >> b >> c;
@@ -63,8 +63,7 @@ void solve()
     for (k = 1; k <= n; k++)
     {
 
-        for (i = 1; i <= n; i++)
-            dist[i] = inf;
+        vector<ll> dist(n + 5, inf);
 
         dist[k] = 0;
         bool flg = false;
