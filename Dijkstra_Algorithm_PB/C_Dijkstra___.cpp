@@ -18,6 +18,7 @@ const ll N = (ll)3e5 + 5;
 const ll mod = (ll)1e9 + 7;
 
 // Ordered Set Declaration
+
 template <typename T>
 using ordered_set = tree<
     T,
@@ -33,30 +34,24 @@ using ordered_set = tree<
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
 
-vector<pair<ll, ll>> adj[N];
-vector<ll> dist(N);
-
-// Solid Dijkstra Algorithm
-// Shortest route lenth from 1 to n
 void solve()
 {
     ll a, b, c, i, j, k, m, n, o, x, y, z;
     cin >> n >> m;
-    for (int i = 1; i <= m; i++)
+
+    vector<pair<ll, ll>> adj[N];
+    vector<ll> dist(N, inf), pre_node(N);
+    for (i = 1; i <= m; i++)
     {
         cin >> a >> b >> c;
         adj[a].push_back({c, b});
+        adj[b].push_back({c, a});
     }
 
-    ll src = 1;    
-    for (ll i = 1; i <= n; i++)
-    {
-        dist[i] = inf;
-    }
+    ll src = 1;
     dist[src] = 0;
-
     set<pair<ll, ll>> st;
-    for (ll i = 1; i <= n; i++)
+    for (i = 1; i <= n; i++)
     {
         st.insert({dist[i], i});
     }
@@ -73,39 +68,58 @@ void solve()
         {
             ll next_node = it.sd;
             ll edge_weight = it.ft;
-            if (edge_weight + dis < dist[next_node])
+            if (dis + edge_weight < dist[next_node])
             {
                 st.erase({dist[next_node], next_node});
                 dist[next_node] = dis + edge_weight;
                 st.insert({dist[next_node], next_node});
+                pre_node[next_node] = cur_node;
             }
         }
     }
-    for (ll i = 1; i <= n; i++)
+
+    if (dist[n] == inf)
     {
-        cout << dist[i] << " ";
+        cout << -1 << endl;
+        return;
+    }
+    vector<ll> path;
+    ll initial_node = n;
+    while (initial_node != 1)
+    {
+        path.pb(initial_node);
+        initial_node = pre_node[initial_node];
+    }
+    path.pb(initial_node);
+    reverse(path.begin(), path.end());
+    for (auto val : path)
+    {
+        cout << val << " ";
     }
 }
+
 int main()
 {
+
     ASHRAFUL
-
     solve();
-
     return 0;
 }
+
 // Coded by Ashraful Islam @ml.ashraful37
 
 /*
-Input:
-3 4
-1 2 6
-1 3 2
-3 2 3
-1 3 4
+Sample Input:
+5 6
+1 2 2
+2 5 5
+2 3 4
+1 4 1
+4 3 3
+3 5 1
 
-Output:
-0 5 2
+Sample Output:
+1 4 3 5
 
-https://cses.fi/problemset/task/1671/
+https://codeforces.com/contest/20/problem/C
 */

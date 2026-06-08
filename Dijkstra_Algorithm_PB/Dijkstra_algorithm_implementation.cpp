@@ -63,8 +63,8 @@ void solve()
         st.insert({dist[i], i});
     }
 
-    // onek node inf distance niya insert hocche
-    // pore jodi node gular distance kome jay, amra oi info erase kre new dist info update kre dibo.
+    // onek node infinite distance niya insert hocche
+    // pore jodi node gular distance kome jay, amra oi info erase kre new distance info update kre dibo.
 
     while (st.sz())
     {

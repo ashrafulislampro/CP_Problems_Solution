@@ -33,47 +33,46 @@ using ordered_set = tree<
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
 
-vector<pair<ll, ll>> adj[N];
-vector<ll> dist(N);
-
-// Solid Dijkstra Algorithm
-// Shortest route lenth from 1 to n
+ordered_set<int> ost;
 void solve()
 {
-    ll a, b, c, i, j, k, m, n, o, x, y, z;
+    ll a, b, c, i, m, n;
     cin >> n >> m;
-    for (int i = 1; i <= m; i++)
+    vector<pair<ll, ll>> adj[2 * n + 1];
+    vector<ll> dist(2 * n + 1, inf);
+
+    for (i = 1; i <= m; i++)
     {
         cin >> a >> b >> c;
         adj[a].push_back({c, b});
+        adj[n + b].push_back({c, a + n});
     }
 
-    ll src = 1;    
-    for (ll i = 1; i <= n; i++)
+    for (i = 1; i <= n; i++)
     {
-        dist[i] = inf;
+        adj[i].push_back({0, i + n});
     }
+    ll src = 1;
     dist[src] = 0;
-
     set<pair<ll, ll>> st;
-    for (ll i = 1; i <= n; i++)
+    for (i = 1; i <= (n * 2); i++)
     {
         st.insert({dist[i], i});
     }
 
     while (st.sz())
     {
-        pair<ll, ll> par = *st.begin();
-        st.erase(par);
+        pair<ll, ll> parent = *st.begin();
+        st.erase(parent);
 
-        ll dis = par.ft;
-        ll cur_node = par.sd;
+        ll dis = parent.ft;
+        ll cur_nod = parent.sd;
 
-        for (auto &it : adj[cur_node])
+        for (auto &it : adj[cur_nod])
         {
             ll next_node = it.sd;
             ll edge_weight = it.ft;
-            if (edge_weight + dis < dist[next_node])
+            if (dis + edge_weight < dist[next_node])
             {
                 st.erase({dist[next_node], next_node});
                 dist[next_node] = dis + edge_weight;
@@ -81,31 +80,37 @@ void solve()
             }
         }
     }
-    for (ll i = 1; i <= n; i++)
+
+    for (i = 2; i <= n; i++)
     {
-        cout << dist[i] << " ";
+        ll mn_res = min(dist[i], dist[i + n]);
+        if (mn_res == inf)
+            cout << -1 << " ";
+        else
+            cout << mn_res << " ";
     }
 }
 int main()
 {
     ASHRAFUL
-
     solve();
-
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
 
 /*
-Input:
-3 4
-1 2 6
-1 3 2
-3 2 3
-1 3 4
+Sample Input:
+5 7
+1 2 2
+2 4 1
+4 1 4
+2 5 3
+5 4 1
+5 2 4
+2 1 1
 
-Output:
-0 5 2
+Sample Output:
+1 -1 3 4
 
-https://cses.fi/problemset/task/1671/
+https://codeforces.com/contest/1725/problem/M
 */

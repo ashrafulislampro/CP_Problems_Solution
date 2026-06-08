@@ -32,59 +32,50 @@ using ordered_set = tree<
 #define ASHRAFUL                  \
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
-
-vector<pair<ll, ll>> adj[N];
-vector<ll> dist(N);
-
-// Solid Dijkstra Algorithm
-// Shortest route lenth from 1 to n
+ll dist[405][405];
 void solve()
 {
     ll a, b, c, i, j, k, m, n, o, x, y, z;
     cin >> n >> m;
-    for (int i = 1; i <= m; i++)
+    // initialization
+    for (i = 1; i <= n; i++)
+    {
+        for (j = 1; j <= n; j++)
+        {
+            dist[i][j] = inf;
+        }
+    }
+    // same node distance
+    for (i = 1; i <= n; i++)
+    {
+        dist[i][i] = 0;
+    }
+    // input data
+    for (i = 1; i <= m; i++)
     {
         cin >> a >> b >> c;
-        adj[a].push_back({c, b});
+        dist[a][b] = min(dist[a][b], c);
     }
 
-    ll src = 1;    
-    for (ll i = 1; i <= n; i++)
+    ll sum = 0;
+    // Floyd-Warshall Algorithm
+    // k ---> intermediate node
+    for (k = 1; k <= n; k++)
     {
-        dist[i] = inf;
-    }
-    dist[src] = 0;
-
-    set<pair<ll, ll>> st;
-    for (ll i = 1; i <= n; i++)
-    {
-        st.insert({dist[i], i});
-    }
-
-    while (st.sz())
-    {
-        pair<ll, ll> par = *st.begin();
-        st.erase(par);
-
-        ll dis = par.ft;
-        ll cur_node = par.sd;
-
-        for (auto &it : adj[cur_node])
+        // i ----> source node
+        for (i = 1; i <= n; i++)
         {
-            ll next_node = it.sd;
-            ll edge_weight = it.ft;
-            if (edge_weight + dis < dist[next_node])
+            // j ----> destination node
+            for (j = 1; j <= n; j++)
             {
-                st.erase({dist[next_node], next_node});
-                dist[next_node] = dis + edge_weight;
-                st.insert({dist[next_node], next_node});
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+
+                if (dist[i][j] < inf)
+                    sum += dist[i][j];
             }
         }
     }
-    for (ll i = 1; i <= n; i++)
-    {
-        cout << dist[i] << " ";
-    }
+    cout << sum << endl;
 }
 int main()
 {
@@ -96,16 +87,16 @@ int main()
 }
 // Coded by Ashraful Islam @ml.ashraful37
 
+
 /*
-Input:
-3 4
-1 2 6
-1 3 2
-3 2 3
-1 3 4
+Sample Input:
+3 2
+1 2 3
+2 3 2
 
-Output:
-0 5 2
+Sample Output:
+25
 
-https://cses.fi/problemset/task/1671/
+
+https://atcoder.jp/contests/abc208/tasks/abc208_d
 */

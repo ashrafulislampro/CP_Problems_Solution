@@ -33,59 +33,60 @@ using ordered_set = tree<
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
 
-vector<pair<ll, ll>> adj[N];
-vector<ll> dist(N);
-
-// Solid Dijkstra Algorithm
-// Shortest route lenth from 1 to n
 void solve()
 {
     ll a, b, c, i, j, k, m, n, o, x, y, z;
     cin >> n >> m;
-    for (int i = 1; i <= m; i++)
+    vector<pair<ll, ll>> adj[n + 1];
+    vector<ll> dist(n + 1);
+
+    for (i = 1; i <= m; i++)
     {
         cin >> a >> b >> c;
         adj[a].push_back({c, b});
     }
 
-    ll src = 1;    
-    for (ll i = 1; i <= n; i++)
+    ll src = 1;
+    for (i = 1; i <= n; i++)
     {
         dist[i] = inf;
     }
     dist[src] = 0;
 
     set<pair<ll, ll>> st;
-    for (ll i = 1; i <= n; i++)
+    for (i = 1; i <= n; i++)
     {
         st.insert({dist[i], i});
     }
 
-    while (st.sz())
+    while (st.size())
     {
-        pair<ll, ll> par = *st.begin();
-        st.erase(par);
+        pair<ll, ll> parent = *st.begin();
+        st.erase(parent);
 
-        ll dis = par.ft;
-        ll cur_node = par.sd;
+        ll dis = parent.ft;
+        ll cur_nod = parent.sd;
 
-        for (auto &it : adj[cur_node])
+        for (auto &it : adj[cur_nod])
         {
-            ll next_node = it.sd;
+            ll next_nod = it.sd;
             ll edge_weight = it.ft;
-            if (edge_weight + dis < dist[next_node])
+
+            if (dis + edge_weight < dist[next_nod])
             {
-                st.erase({dist[next_node], next_node});
-                dist[next_node] = dis + edge_weight;
-                st.insert({dist[next_node], next_node});
+                st.erase({dist[next_nod], next_nod});
+                dist[next_nod] = dis + edge_weight;
+                st.insert({dist[next_nod], next_nod});
             }
         }
     }
-    for (ll i = 1; i <= n; i++)
+
+    for (i = 1; i <= n; i++)
     {
-        cout << dist[i] << " ";
+        cout << dist[i] << " \n"[i == n];
     }
 }
+
 int main()
 {
     ASHRAFUL
@@ -97,14 +98,14 @@ int main()
 // Coded by Ashraful Islam @ml.ashraful37
 
 /*
-Input:
+Sample Input:
 3 4
 1 2 6
 1 3 2
 3 2 3
 1 3 4
 
-Output:
+Sample Output:
 0 5 2
 
 https://cses.fi/problemset/task/1671/
