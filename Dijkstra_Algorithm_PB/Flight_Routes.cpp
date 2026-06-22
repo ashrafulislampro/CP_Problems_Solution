@@ -13,7 +13,6 @@ const ll inf = (ll)1e18;
 const ll N = (ll)2e5 + 5;
 const ll mod = (ll)1e9 + 7;
 
-// const int INF = 1000000000;
 #define ASHRAFUL                  \
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
@@ -83,8 +82,6 @@ int main()
     dijkstra();
     return 0;
 }
-
-
 
 /*
 Sample Input:
