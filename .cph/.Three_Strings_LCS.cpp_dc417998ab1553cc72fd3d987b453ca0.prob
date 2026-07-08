@@ -1,0 +1,1 @@
+{"name":"Local: Three_Strings_LCS","url":"/home/ashraful-islam/Documents/CP_Problems_Solution/Three_Strings_LCS.cpp","tests":[{"id":1783259189401,"input":"1\nabycde\neabfc\ncddddagggb","output":"2\nab"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/ashraful-islam/Documents/CP_Problems_Solution/Three_Strings_LCS.cpp","group":"local","local":true}
