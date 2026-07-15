@@ -24,6 +24,8 @@ const ll mod = (ll)1e9 + 7;
 vector<ll> arr, brr;
 ll dp[1005][1005];
 
+
+// This program isn't correct for this Problem.
 ll LCS(ll i, ll j)
 {
     if (i == arr.sz() || j == brr.sz())
@@ -81,6 +83,7 @@ void solve()
 
     cout << LCS(0, 0) << "\n";
 }
+
 int main()
 {
     ASHRAFUL
@@ -88,3 +91,5 @@ int main()
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
+
+// https://www.spoj.com/problems/LCDS/en/
