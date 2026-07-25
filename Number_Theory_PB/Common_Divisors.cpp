@@ -64,3 +64,5 @@ int main()
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
+
+// https://cses.fi/alon/task/1081

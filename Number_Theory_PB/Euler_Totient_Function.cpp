@@ -39,38 +39,28 @@ bool isPrime(int n)
     }
     return true;
 }
-// Euler Totient Function
+// Euler Totient Function solution with O(sqrt(N))
 void solve()
 {
     int n;
     cin >> n;
-
-    if (isPrime(n))
+    int result = n;
+    for (int i = 2; i * i <= n; i++)
     {
-        cout << n - 1 << "\n";
-    }
-    else
-    {
-        vector<int> arr;
-        int len = sqrt(n);
-        for (int i = 2; i <= n; i++)
+        if (n % i == 0)
         {
-            if (n % i == 0)
+            while (n % i == 0)
             {
-                if (isPrime(i))
-                {
-                    arr.pb(i);
-                }
+                n /= i;
             }
+            result -= result / i;
         }
-
-        int coprime = n;
-        for (auto &it : arr)
-        {
-            coprime *= (1.0 - (1.0 / it));
-        }
-        cout << coprime << "\n";
     }
+
+    if (n > 1)
+        result -= result / n;
+
+    cout << result << "\n";
 }
 int main()
 {
@@ -84,3 +74,5 @@ int main()
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
+
+// https://www.spoj.com/problems/ETF/

@@ -56,3 +56,5 @@ int main()
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
+
+// https://www.spoj.com/problems/COMDIV/
