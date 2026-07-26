@@ -24,43 +24,33 @@ const ll mod = (ll)1e9 + 7;
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
 
-bool isPrime(int n)
-{
-    if (n < 2)
-        return false;
-    if (n <= 3)
-        return true;
-    if (n % 2 == 0 || n % 3 == 0)
-        return false;
-    for (int i = 5; i * i <= n; i++)
-    {
-        if (n % i == 0)
-            return false;
-    }
-    return true;
-}
-// Euler Totient Function solution with O(sqrt(N))
 void solve()
 {
-    int n;
+    int n, x;
     cin >> n;
-    int result = n;
-    for (int i = 2; i * i <= n; i++)
+
+    vector<ll> arr(n + 2, 0);
+
+    for (int i = 1; i <= n; i++)
     {
-        if (n % i == 0)
-        {
-            while (n % i == 0)
-            {
-                n /= i;
-            }
-            result -= result / i;
-        }
+        cin >> arr[i];
     }
 
-    if (n > 1)
-        result -= result / n;
-
-    cout << result << "\n";
+    if (n == 1)
+    {
+        cout << "NO" << "\n";
+        return;
+    }
+   
+    for (int i = 1; i <= n; i += 2)
+    {        
+        if (arr[i] - arr[i + 1] < 2)
+        {
+            cout << "NO\n";
+            return;
+        }
+    }
+    cout << "YES\n";
 }
 int main()
 {
@@ -74,7 +64,3 @@ int main()
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
-
-// https://www.spoj.com/problems/ETF/
-
-// https://cp-algorithms.com/algebra/phi-function.html
