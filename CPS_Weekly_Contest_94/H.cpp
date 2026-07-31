@@ -24,41 +24,27 @@ const ll mod = (ll)1e9 + 7;
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
 
-bool isPalim(string ss)
-{
-    string tmp = ss;
-    reverse(tmp.begin(), tmp.end());
-
-    if (tmp == ss)
-    {
-        return true;
-    }
-    return false;
-}
 void solve()
 {
-    string ss, res = "";
+    string ss;
     cin >> ss;
 
-    int mx_cnt = 0;
-    for (int i = 0; i < ss.sz(); i++)
+    map<char, int> mp;
+    char ch = 'a';
+    for (int i = 1; i <= 26; i++)
     {
-        res += ss[i];
-
-        if (!isPalim(res))
-        {
-            mx_cnt = max(mx_cnt, (int)res.size());
-        }
+        mp[ch++] = i;
     }
 
-    if (mx_cnt == 0)
+    int fst = mp[ss[0]];
+    int scd = mp[ss[1]];
+
+    if (fst > scd)
     {
-        cout << -1 << "\n";
+        cout << ((--fst * 25) + scd) << "\n";
     }
     else
-    {
-        cout << mx_cnt << "\n";
-    }
+        cout << ((--fst * 25) + (--scd)) << "\n";
 }
 int main()
 {
