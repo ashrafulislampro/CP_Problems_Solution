@@ -26,10 +26,33 @@ const ll mod = (ll)1e9 + 7;
 
 void solve()
 {
-    ll l, r, n;
-    cin >> l >> r >> n;
+    int m, n;
+    cin >> n >> m;
 
-    // SegmentedSieve(l, r)<<"\n";
+    vector<int> a(n), b(m);
+    for (auto &x : a)
+        cin >> x;
+    for (auto &x : b)
+        cin >> x;
+
+    sort(a.begin(), a.end()), sort(b.begin(), b.end());
+
+    if (a.sz() < 2 * b.sz())
+    {
+        cout << "NO\n";
+        return;
+    }
+
+    for (int i = b.sz() - 1; i >= 0; i--)
+    {
+        if (!(a[i] <= b[i] && b[i] <= a[a.sz() - b.sz() + i]))
+        {
+            cout << "NO\n";
+            return;
+        }
+    }
+
+    cout << "YES\n";
 }
 int main()
 {

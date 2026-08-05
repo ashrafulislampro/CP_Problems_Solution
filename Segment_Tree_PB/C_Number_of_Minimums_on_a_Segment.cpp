@@ -16,71 +16,81 @@ template <typename T>
 using vec = vector<T>;
 
 using ll = long long;
-const ll inf = (ll)1e18;
+const ll inf = (ll)1e9 + 7;
 const ll N = (ll)1e5 + 5;
 const ll mod = (ll)1e9 + 7;
 
 #define ASHRAFUL                  \
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
-ll tre[4 * N];
-ll arr[N];
+pair<int, int> tre[4 * N];
+int arr[N];
 
+pair<int, int> combine(pair<int, int> a, pair<int, int> b)
+{
+    pair<int, int> ans;
+    if (a.first == b.first)
+    {
+        ans.first = a.first;
+        ans.sd = a.sd + b.sd;
+        return ans;
+    }
+
+    return min(a, b);
+}
 void build(int n, int l, int r)
 {
     if (l == r)
     {
-        tre[n] = arr[l];
+        tre[n] = {arr[l], 1};
         return;
     }
     int mid = l + (r - l) / 2;
     build(2 * n, l, mid);
     build(2 * n + 1, mid + 1, r);
 
-    // sum of two child
-    tre[n] = tre[2 * n] + tre[2 * n + 1];
+    // combine <- change
+    tre[n] = combine(tre[2 * n], tre[2 * n + 1]);
 }
 
-void update(int n, int l, int r, int i, ll v)
+void update(int n, int l, int r, int i, int v)
 {
-    if (i > r || i < l)
-        return;
-
-    if (i == l and i == r)
+    if (i < l || i > r)
     {
-        tre[n] = v;
         return;
     }
-
+    if (l == r)
+    {
+        tre[n] = {v, 1};
+        return;
+    }
     int mid = l + (r - l) / 2;
     update(2 * n, l, mid, i, v);
     update(2 * n + 1, mid + 1, r, i, v);
 
-    tre[n] = tre[2 * n] + tre[2 * n + 1];
+    // combine <- change
+    tre[n] = combine(tre[2 * n], tre[2 * n + 1]);
 }
 
-ll sum(int n, int l, int r, int i, int j)
+pair<int, int> query(int n, int l, int r, int i, int j)
 {
     if (i > r || j < l)
-        return 0;
-    if (l > r)
-        return 0;
-    if (l == i and r == j)
+    {
+        return {inf, 0};
+    }
+
+    if (l >= i && r <= j)
     {
         return tre[n];
     }
-
     int mid = l + (r - l) / 2;
-    ll sum1 = sum(2 * n, l, mid, i, min(j, mid));
-    ll sum2 = sum(2 * n + 1, mid + 1, r, max(i, mid + 1), j);
 
-    return sum1 + sum2;
-    // return (sum(2 * n, l, mid, i, min(j, mid)) + sum(2 * n + 1, mid + 1, r, max(i, mid + 1), j));
+    // combine <- change
+    return combine(query(2 * n, l, mid, i, j), query(2 * n + 1, mid + 1, r, i, j));
 }
-
 void solve()
 {
-    ll n, q, ty, i, j, v;
+    int n, q, ty, i, j, v;
     cin >> n >> q;
 
     for (int i = 1; i <= n; i++)
@@ -99,7 +109,8 @@ void solve()
         else
         {
             cin >> i >> j;
-            cout << sum(1, 1, n, i + 1, j) << "\n";
+            pair<int, int> ans = query(1, 1, n, i + 1, j);
+            cout << ans.ft << " " << ans.sd << "\n";
         }
     }
 }
@@ -107,6 +118,7 @@ int main()
 {
     ASHRAFUL
     solve();
+
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
