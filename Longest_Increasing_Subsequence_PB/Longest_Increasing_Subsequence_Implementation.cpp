@@ -74,7 +74,7 @@ void path_print(int i, int j)
         cout << arr[i] << " ";
     }
     auto it = next_state[i][j];
-    path_print(i+1, it);
+    path_print(i + 1, it);
 }
 // n = 10^5
 // element range = 1 -> 100
