@@ -20,8 +20,7 @@ int main()
     for (int x = 1; x <= m; x++)
         cin >> b[x];
 
-        
-    for (int x = 1; x <= n; x++)
+        for (int x = 1; x <= n; x++)
     {
         int z = 0;
         for (int y = 1; y <= m; y++)

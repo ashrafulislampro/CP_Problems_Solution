@@ -16,50 +16,61 @@ template <typename T>
 using vec = vector<T>;
 
 using ll = long long;
-const ll inf = (ll)1e9;
+const ll inf = (ll)1e18;
 const ll N = (ll)3e5 + 5;
 const ll mod = (ll)1e9 + 7;
-
-vector<int> arr_1, arr_2;
-int dp[505][505];
-pair<int, int> next_step[505][505];
 
 #define ASHRAFUL                  \
     ios_base::sync_with_stdio(0); \
     cin.tie(0), cout.tie(0);
 
-int LCIS(int i , int j){
-    if(i == arr_1.sz() || j == arr_2.sz()){
-        return 0;
-    }
-
-    if(dp[i][j] != -1)return dp[i][j];
-
-    
-}
 void solve()
 {
-    int n, m;
-    cin >> n;
-    arr_1.resize(n + 1, 0);
-    for (auto &it : arr_1)
+    ll n, c;
+    cin >> n >> c;
+    bool flg = false;
+    vector<int> A(n), B(n);
+    for (auto &it : A)
         cin >> it;
-    cin >> m;
-    arr_2.resize(m + 1, 0);
-    for (auto &it : arr_2)
+    for (auto &it : B)
         cin >> it;
 
-    for (int i = 0; i <= n; i++)
+    int cost = 0;
+    for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j <= m; j++)
+        if (A[i] >= B[i])
         {
-            dp[i][j] = -1;
+            cost += A[i] - B[i];
+        }
+        else
+        {
+            flg = true;
+            break;
         }
     }
 
-    cout<<LCIS(0, 0)<<"\n";
-    
-
+    if (flg)
+    {
+        sort(A.begin(), A.end()), sort(B.begin(), B.end());
+        cost = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (A[i] >= B[i])
+            {
+                cost += A[i] - B[i];
+            }
+            else
+            {
+                cout << -1 << "\n";
+                return;
+            }
+        }
+        cout << c + cost << "\n";
+    }
+    else
+    {
+        cout << cost << "\n";
+    }
 }
 int main()
 {
