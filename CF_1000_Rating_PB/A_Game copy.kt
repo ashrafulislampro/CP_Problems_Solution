@@ -12,3 +12,6 @@ fun main(){val t = readInt() repeat(t){solve() } }
 
 // Utility for fast input
 private var st = StringTokenizer("") private fun readInt() : Int{while (!st.hasMoreTokens()){st = StringTokenizer(readLine() !!) } return st.nextToken().toInt() }
+
+
+// https://codeforces.com/problemset/problem/2199/A

@@ -26,30 +26,36 @@ const ll mod = (ll)1e9 + 7;
 
 void solve()
 {
-    int k, alice_src = 0, alice_win = 0, bob_src = 0, bob_win = 0, a1, b1, a2, b2;
-    cin >> k;
-    cin >> a1 >> b1;
-    cin >> a2 >> b2;
+    int n, k, x;
+    cin >> n >> k;
 
-    alice_src = a1 + a2;
-    bob_src = b1 + b2;
-    if (a1 > b1)
-        alice_win++;
-    else
-        bob_win++;
+    vi arr;
+    map<int, int> frq;
 
-    if (a2 > b2)
-        alice_win++;
-    else
-        bob_win++;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> x;
+        frq[x]++;
+    }
 
-    if(alice_src == bob_src+k){
-        if(alice_win > bob_win){
-            cout<<"NO\n";
-        }else cout<<"YES\n";
-    }else if(alice_src > bob_src+k)
-        cout<<"NO\n";
-    else cout<<"YES\n";
+    for (auto [key, val] : frq)
+    {
+        arr.pb(val);
+    }
+    sort(arr.begin(), arr.end());
+
+    int ans = 0;
+    for (int i = 0; i < (int)arr.sz(); i++)
+    {
+        if (arr[i] <= k)
+        {
+            k -= arr[i];
+            continue;
+        }
+        ans++;
+    }
+
+    cout << (ans == 0 ? 1 : ans) << "\n";
 }
 int main()
 {
@@ -63,5 +69,3 @@ int main()
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
-
-// https://codeforces.com/problemset/problem/2199/A

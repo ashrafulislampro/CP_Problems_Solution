@@ -26,30 +26,29 @@ const ll mod = (ll)1e9 + 7;
 
 void solve()
 {
-    int k, alice_src = 0, alice_win = 0, bob_src = 0, bob_win = 0, a1, b1, a2, b2;
-    cin >> k;
-    cin >> a1 >> b1;
-    cin >> a2 >> b2;
+    int n, m, k;
+    cin >> n >> m >> k;
 
-    alice_src = a1 + a2;
-    bob_src = b1 + b2;
-    if (a1 > b1)
-        alice_win++;
-    else
-        bob_win++;
+    vi q_list(m), quest(k);
+    for (auto &it : q_list)
+        cin >> it;
+    for (auto &it : quest)
+        cin >> it;
 
-    if (a2 > b2)
-        alice_win++;
-    else
-        bob_win++;
+    vector<bool> used(n + 1);
+    for (auto it : quest)
+        used[it] = true;
 
-    if(alice_src == bob_src+k){
-        if(alice_win > bob_win){
-            cout<<"NO\n";
-        }else cout<<"YES\n";
-    }else if(alice_src > bob_src+k)
-        cout<<"NO\n";
-    else cout<<"YES\n";
+    for (int i = 0; i < m; i++)
+    {
+        if (n == k or (k == n - 1 and !used[q_list[i]]))
+        {
+            cout << 1;
+        }
+        else
+            cout << 0;
+    }
+    cout << "\n";
 }
 int main()
 {
@@ -63,5 +62,3 @@ int main()
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
-
-// https://codeforces.com/problemset/problem/2199/A

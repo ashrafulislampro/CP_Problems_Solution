@@ -26,30 +26,32 @@ const ll mod = (ll)1e9 + 7;
 
 void solve()
 {
-    int k, alice_src = 0, alice_win = 0, bob_src = 0, bob_win = 0, a1, b1, a2, b2;
-    cin >> k;
-    cin >> a1 >> b1;
-    cin >> a2 >> b2;
+    int n;
+    cin >> n;
+    vi A(n), B(n);
+    for (auto &it : A)
+        cin >> it;
 
-    alice_src = a1 + a2;
-    bob_src = b1 + b2;
-    if (a1 > b1)
-        alice_win++;
+    int bad = -1, margin = 1e9, need = 0;
+    bool reject = 0;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> B[i];
+        if (A[i] < B[i])
+        {
+            if (bad != -1)
+                reject = 1;
+            bad = i;
+            need = B[i] - A[i];
+        }
+        else
+            margin = min(margin, A[i] - B[i]);
+    }
+
+    if (reject)
+        cout << "NO\n";
     else
-        bob_win++;
-
-    if (a2 > b2)
-        alice_win++;
-    else
-        bob_win++;
-
-    if(alice_src == bob_src+k){
-        if(alice_win > bob_win){
-            cout<<"NO\n";
-        }else cout<<"YES\n";
-    }else if(alice_src > bob_src+k)
-        cout<<"NO\n";
-    else cout<<"YES\n";
+        cout << ((margin >= need) ? "YES\n" : "NO\n");
 }
 int main()
 {
@@ -63,5 +65,3 @@ int main()
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
-
-// https://codeforces.com/problemset/problem/2199/A
