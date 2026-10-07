@@ -26,32 +26,29 @@ const ll mod = (ll)1e9 + 7;
 
 void solve()
 {
-    int n, x;
-    cin >> n;
+    int n, m;
+    cin >> n >> m;
+    string s, l;
+    cin >> s >> l;
 
-    deque<int> A, B;
-    for (int i = 0; i < n; i++)
-    {
-        cin >> x;
-        A.pb(x);
-    }
+    int ans = 0, l_cnt = 0, r_cnt = 0;
 
     for (int i = 0; i < n; i++)
     {
-        cin >> x;
-        B.pb(x);
+        auto it = find(l.begin(), l.end(), s[i]);
+        if (it != l.end())
+        {
+            l_cnt++;
+            r_cnt = 0;
+        }
+        else
+        {
+            l_cnt = 0;
+            r_cnt++;
+        }
+        ans = max({ans, l_cnt, r_cnt});
     }
-
-    if(A == B){
-         cout << "Bob\n";
-         return;
-    }
-    reverse(A.begin(), A.end());
-
-    if (A == B)
-        cout << "Bob\n";
-    else
-        cout << "Alice\n";
+    cout << ans << "\n";
 }
 int main()
 {

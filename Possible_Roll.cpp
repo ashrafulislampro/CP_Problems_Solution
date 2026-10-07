@@ -26,41 +26,27 @@ const ll mod = (ll)1e9 + 7;
 
 void solve()
 {
-    int n, x;
-    cin >> n;
+    int n, k, y;
+    cin >> n >> k >> y;
 
-    deque<int> A, B;
-    for (int i = 0; i < n; i++)
+    vi arr;
+    for (int i = 1; i <= n; i++)
     {
-        cin >> x;
-        A.pb(x);
+        arr.push_back(k * i);
     }
-
-    for (int i = 0; i < n; i++)
+    auto it = find(arr.begin(), arr.end(), y);
+    if (it != arr.end())
     {
-        cin >> x;
-        B.pb(x);
+        cout << "YES\n";
     }
-
-    if(A == B){
-         cout << "Bob\n";
-         return;
-    }
-    reverse(A.begin(), A.end());
-
-    if (A == B)
-        cout << "Bob\n";
     else
-        cout << "Alice\n";
+        cout << "NO\n";
 }
 int main()
 {
     ASHRAFUL
 
-    int T = 1;
-    cin >> T;
-    while (T--)
-        solve();
+    solve();
 
     return 0;
 }

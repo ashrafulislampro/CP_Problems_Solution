@@ -26,32 +26,51 @@ const ll mod = (ll)1e9 + 7;
 
 void solve()
 {
-    int n, x;
+    int n;
     cin >> n;
 
-    deque<int> A, B;
-    for (int i = 0; i < n; i++)
+    vi arr(n), tmp;
+    for (auto &it : arr)
+        cin >> it;
+
+    if (is_sorted(arr.begin(), arr.end()))
     {
-        cin >> x;
-        A.pb(x);
+        cout << 0 << "\n";
+        return;
     }
 
-    for (int i = 0; i < n; i++)
+    int lst = arr[0];
+    for (int i = 1; i < n; i++)
     {
-        cin >> x;
-        B.pb(x);
+        if (arr[i] > lst)
+        {
+            lst = arr[i];
+            continue;
+        }
+        tmp.pb(lst - arr[i]);
     }
 
-    if(A == B){
-         cout << "Bob\n";
-         return;
-    }
-    reverse(A.begin(), A.end());
+    sort(tmp.rbegin(), tmp.rend());
 
-    if (A == B)
-        cout << "Bob\n";
-    else
-        cout << "Alice\n";
+    ll ans = 0;
+    while (tmp.sz() >= 1)
+    {
+        lst = tmp.back();
+        ans += (ll)((tmp.sz() + 1) * lst);
+
+        for (int i = tmp.sz() - 1; i >= 0; i--)
+        {
+            tmp[i] -= lst;
+        }
+
+        lst = tmp.back();
+        while (tmp.sz() > 0 and lst == 0)
+        {
+            tmp.pop_back();
+            lst = tmp.back();
+        }
+    }
+    cout << ans << "\n";
 }
 int main()
 {

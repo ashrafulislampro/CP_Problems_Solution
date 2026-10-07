@@ -26,32 +26,21 @@ const ll mod = (ll)1e9 + 7;
 
 void solve()
 {
-    int n, x;
+    int n;
     cin >> n;
 
-    deque<int> A, B;
-    for (int i = 0; i < n; i++)
-    {
-        cin >> x;
-        A.pb(x);
-    }
+    vi arr(n);
+    for (auto &it : arr)
+        cin >> it;
 
     for (int i = 0; i < n; i++)
     {
-        cin >> x;
-        B.pb(x);
+        if (arr[i] == n)
+            cout << 1 << ' ';
+        else
+            cout << arr[i] + 1 << ' ';
     }
-
-    if(A == B){
-         cout << "Bob\n";
-         return;
-    }
-    reverse(A.begin(), A.end());
-
-    if (A == B)
-        cout << "Bob\n";
-    else
-        cout << "Alice\n";
+    cout << "\n";
 }
 int main()
 {
