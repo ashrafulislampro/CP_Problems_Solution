@@ -26,27 +26,29 @@ const ll mod = (ll)1e9 + 7;
 
 void solve()
 {
-    int n;
+    ll n, ans = 0, g = 0, b = -1e18;
     cin >> n;
-    vi arr(n);
+    vll arr(n);
     for (auto &it : arr)
         cin >> it;
 
-    int cnt = 0, mx = 0, l = 0, r = 0;
-
-    while (r < n)
+    for (ll i = 0; i + 1 < n; i++)
     {
-        if (abs(arr[l] - arr[r]) <= 1)
-            cnt++;
-        else
-        {
-            l = r;
-            cnt = 1;
-        }
-        mx = max(mx, cnt);
-        r++;
+        if (arr[i] == arr[i + 1])
+            ans++;
     }
-    cout << mx - 1 << "\n";
+
+    for (ll i = 0; i + 1 < n; i++)
+    {
+        ll x = (arr[i] == arr[i + 1] + 1) - (arr[i] == arr[i + 1]);
+        ll y = (arr[i] + 1 == arr[i + 1]) - (arr[i] == arr[i + 1]);
+        
+        g = max(g, max(x, y));
+        if (b != -1e18)
+            g = max(g, b + y);
+        b = max(b, x);
+    }
+    cout << ans + g << "\n";
 }
 int main()
 {
