@@ -32,30 +32,36 @@ const ll mod = (ll)1e9 + 7;
 
 void solve()
 {
-    ll a, b, c, i, j, k, m,mm, n, h, x, y, z;
+    ll a, b, c, i, j, k, m, mm, n, h, x, y, z;
     cin >> n >> m >> h;
 
     vll arr(n), tmp;
     input(arr);
     tmp = arr;
     vector<pii> pr;
+    vi touch;
     mm = m;
-    while (m--)
+    int lst_exceed_op = 0;
+    for (int i = 1; i <= m; i++)
     {
         cin >> b >> c;
         b--;
         pr.push_back({b, c});
+        touch.pb(b);
+        tmp[b] += c;
+        if (tmp[b] > h)
+        {
+            lst_exceed_op = i;
+            for (auto id : touch)
+                tmp[id] = arr[id];
+            touch.clear();
+        }
     }
-    for (int i = mm - 1; i >= 0; i--)
+
+    for (int i = lst_exceed_op; i < m; i++)
     {
         ll idx = pr[i].ft;
         ll vv = pr[i].sd;
-        ll val = arr[idx] + vv;
-        if (val > h)
-        {
-            arr = tmp;
-            break;
-        }
         arr[idx] += vv;
     }
     for (auto it : arr)
