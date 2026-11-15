@@ -32,32 +32,27 @@ const ll mod = (ll)1e9 + 7;
 
 void solve()
 {
-    ll a, b, c, i, j, k, m, n, o, x, y, z;
+    int a, b, c, i, j, k, m, n, o, x, y, z;
     cin >> n;
-    string ss;
-    cin >> ss;
+    vi bb(n), p(n, -1);
+    input(bb);
 
-    bool flg = false;
-    for (int i = 0; i < n / 2; i++)
+    for (int x = 1; x < n + 1; x++)
     {
-        if (ss[i] != ss[n - i - 1])
+        int i = n + bb[x - 1] - (x - 1);
+        if (1 <= i and i <= n)
+            p[i - 1] = x;
+    }
+    for (auto it : p)
+    {
+        if (it == -1)
         {
-            flg = true;
-            break;
+            cout << -1;
+            return;
         }
     }
-
-    if (!flg)
-    {
-        cout << 0;
-        return;
-    }
-
-    sort(ss.rbegin(), ss.rend());
-
-    int ch = ss[0];
-    
-    cout<<ch-97;
+    for (auto it : p)
+        cout << it << ' ';
 }
 int main()
 {
@@ -73,3 +68,4 @@ int main()
     return 0;
 }
 // Coded by Ashraful Islam @ml.ashraful37
+// https://codeforces.com/contest/2290/problem/F
